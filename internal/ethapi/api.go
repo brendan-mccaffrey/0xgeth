@@ -894,9 +894,9 @@ func (s *BlockChainAPI) GetStorageAtList(ctx context.Context, addresses []common
 		return nil, fmt.Errorf("unable to decode storage key: %s", err)
 	}
 	resList := make([]hexutil.Bytes, len(addresses))
-	for _, address := range addresses {
+	for i, address := range addresses {
 		res := state.GetState(address, key)
-		resList = append(resList, res[:])
+		resList[i] = res[:]
 	}
 	return resList, state.Error()
 }
