@@ -361,6 +361,14 @@ func (ec *Client) StorageAt(ctx context.Context, account common.Address, key com
 	return result, err
 }
 
+// StorageAtList returns the value of key in the contract storage of the given account.
+// The block number can be nil, in which case the value is taken from the latest known block.
+func (ec *Client) StorageAtList(ctx context.Context, accounts []common.Address, key common.Hash, blockNumber *big.Int) ([]byte, error) {
+	var result hexutil.Bytes
+	err := ec.c.CallContext(ctx, &result, "eth_getStorageAtList", accounts, key, toBlockNumArg(blockNumber))
+	return result, err
+}
+
 // CodeAt returns the contract code of the given account.
 // The block number can be nil, in which case the code is taken from the latest known block.
 func (ec *Client) CodeAt(ctx context.Context, account common.Address, blockNumber *big.Int) ([]byte, error) {
@@ -440,6 +448,13 @@ func (ec *Client) PendingBalanceAt(ctx context.Context, account common.Address) 
 func (ec *Client) PendingStorageAt(ctx context.Context, account common.Address, key common.Hash) ([]byte, error) {
 	var result hexutil.Bytes
 	err := ec.c.CallContext(ctx, &result, "eth_getStorageAt", account, key, "pending")
+	return result, err
+}
+
+// PendingStorageAtList returns the value of key in the contract storage of the given account in the pending state.
+func (ec *Client) PendingStorageAtList(ctx context.Context, accounts []common.Address, key common.Hash) ([]byte, error) {
+	var result hexutil.Bytes
+	err := ec.c.CallContext(ctx, &result, "eth_getStorageAtList", accounts, key, "pending")
 	return result, err
 }
 
