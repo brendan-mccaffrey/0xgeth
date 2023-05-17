@@ -5419,6 +5419,20 @@ require = (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { va
                 inputFormatter: [formatters.inputCallFormatter, formatters.inputDefaultBlockNumberFormatter]
             });
 
+            var callMultiple = new Method({
+                name: 'callMultiple',
+                call: 'eth_callMultiple',
+                params: 2,
+                inputFormatter: [null, formatters.inputDefaultBlockNumberFormatter]
+            });
+
+            var batchCallMultiple = new Method({
+                name: 'batchCallMultiple',
+                call: 'eth_batchCallMultiple',
+                params: 3,
+                inputFormatter: [null, null, formatters.inputDefaultBlockNumberFormatter]
+            });
+
             var callWithLogs = new Method({
                 name: 'call',
                 call: 'eth_callWithLogs',
